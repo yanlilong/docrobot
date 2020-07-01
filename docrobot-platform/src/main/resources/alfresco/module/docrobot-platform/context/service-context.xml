@@ -18,8 +18,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"/>
-<bean id="sachberichtChangedBehaviour" class="de.upsource.atenekom.eakte.sachbericht.SachberichtChangedBehaviour" init-method="registerEventHandlers">
-<constructor-arg ref="ServiceRegistry"/>
-<constructor-arg ref="policyBehaviourFilter"/>
-</bean>
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="sachberichtChangedBehaviour" class="de.upsource.atenekom.eakte.sachbericht.SachberichtChangedBehaviour" init-method="registerEventHandlers">
+        <constructor-arg ref="ServiceRegistry"/>
+        <constructor-arg ref="policyBehaviourFilter"/>
+    </bean>
+</beans>
