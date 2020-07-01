@@ -1,0 +1,101 @@
+gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+
+*.iml
+alfresco.log*
+solr.log*
+share.log*
+alf_data_dev/
+target/
+overlays/
+
+##########################
+## Alfresco
+##########################
+**/alf_data_dev
+**/solr_home
+**/solr.log*
+**/share.log*
+**/alfresco.log*
+
+
+##########################
+## Ignore local settings##
+##########################
+properties/local/alfresco-*.properties
+
+
+#################################
+## Ignore JRebel files         ##
+#################################
+**/rebel-remote.xml
+**/rebel.xml
+
+############################
+## Ignore customised   #####
+## run and debug files #####
+###########################
+
+run*.sh
+debug*.sh
+
+##########################
+## Java
+##########################
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+##########################
+## Maven
+##########################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+##########################
+## IntelliJ
+##########################
+*.iml
+.idea/
+*.ipr
+*.iws
+out/
+.idea_modules/
+*.iml___jb_tmp___
+
+##########################
+## Eclipse
+##########################
+.metadata
+.classpath
+.project
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+
+##########################
+## NetBeans
+##########################
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml

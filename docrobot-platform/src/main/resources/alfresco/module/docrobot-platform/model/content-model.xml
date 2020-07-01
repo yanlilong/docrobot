@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="acme:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Optional meta-data about the model -->
+    <description>document robot content model</description>
+    <author>yanli</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco System Model Definitions -->
+    </imports>
+
+    <!-- Custom namespace for the ACME company -->
+    <namespaces><namespace uri="http://docrobot/model/content/1.0" prefix="docrobot"/></namespaces>
+
+
+        Constraints, Types, and Aspects go here...
+        -->
+
+    <types>
+        <!--
+            ACME Enterprise-wide Document root type.
+            All other custom document types would extend this one.
+        -->
+        <type name="docrobot:summerHoliday">
+            <title>Sample Document Type</title>
+            <parent>cm:folder</parent>
+            <properties>
+                <property name="docrobot:number">
+                    <title>summer holiday number</title>
+                    <type>d:int</type>
+                </property>
+                <property name="docrobot:startDate">
+                    <title>summer holidays start</title>
+                    <type>d:date</type>
+                </property>
+                <property name="docrobot:finishDate">
+                    <title>summer holidays finish</title>
+                    <type>d:date</type>
+                </property>
+            </properties>
+        </type>
+    </types>
+</model>

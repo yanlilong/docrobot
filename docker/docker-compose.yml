@@ -1,0 +1,59 @@
+version: '3.4'
+services:
+  docrobot-share:
+    image: alfresco-share-docrobot:development
+    build:
+      dockerfile: ./Dockerfile
+      context: ../../../docrobot-share-docker/target
+    environment:
+      CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+      REPO_HOST: docrobot-acs
+      REPO_PORT: 8080
+    ports:
+      - "${share.port}:8080"
+      - "${share.debug.port}:8888"
+  docrobot-acs:
+    image: alfresco-content-services-docrobot:development
+    build:
+      dockerfile: ./Dockerfile
+      context: ../../../docrobot-platform-docker/target
+    environment:
+      CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+    ports:
+      - "${acs.port}:8080"
+      - "${acs.debug.port}:8888"
+    volumes:
+      - docrobot-acs-volume:/usr/local/tomcat/alf_data
+    depends_on:
+      - docrobot-postgres
+  docrobot-postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: alfresco
+      POSTGRES_USER: alfresco
+      POSTGRES_PASSWORD: alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - "${postgres.port}:5432"
+    volumes:
+      - docrobot-db-volume:/var/lib/postgresql/data
+  docrobot-ass:
+    image: alfresco/alfresco-search-services:1.2.0
+    environment:
+      SOLR_ALFRESCO_HOST: docrobot-acs
+      SOLR_ALFRESCO_PORT: 8080
+      SOLR_SOLR_HOST: docrobot-ass
+      SOLR_SOLR_PORT: 8983
+      SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+    ports:
+      - "8983:8983"
+    volumes:
+      - docrobot-ass-volume:/opt/alfresco-search-services/contentstore
+      - docrobot-ass-volume:/opt/alfresco-search-services/data
+volumes:
+  docrobot-acs-volume:
+    external: true
+  docrobot-db-volume:
+    external: true
+  docrobot-ass-volume:
+    external: true
