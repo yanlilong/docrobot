@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model name="acme:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+<model name="docrobot:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
 
     <!-- Optional meta-data about the model -->
     <description>document robot content model</description>
@@ -16,10 +16,6 @@
 
     <!-- Custom namespace for the ACME company -->
     <namespaces><namespace uri="http://docrobot/model/content/1.0" prefix="docrobot"/></namespaces>
-
-
-        Constraints, Types, and Aspects go here...
-        -->
 
     <types>
         <!--
