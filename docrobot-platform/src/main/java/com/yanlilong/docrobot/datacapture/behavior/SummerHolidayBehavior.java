@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Map;
 
-import static com.yanlilong.docrobot.DocRobotConstants.PROP_START_DATE;
+//import static com.yanlilong.docrobot.DocRobotConstants.PROP_START_DATE;
 
 
 public class SummerHolidayBehavior {
@@ -22,6 +22,7 @@ public class SummerHolidayBehavior {
 
     public SummerHolidayBehavior(ServiceRegistry serviceRegistry) {
         this.serviceRegistry = serviceRegistry;
+        LOGGER.info("BEHAVIOR");
     }
 
     public void registerEventHandlers() {

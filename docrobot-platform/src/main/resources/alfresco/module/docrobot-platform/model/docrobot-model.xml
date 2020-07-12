@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="docrbt:docrobotModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Optional meta-data about the model -->
+    <description>document robot content model</description>
+    <author>yanli</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco System Model Definitions -->
+    </imports>
+
+    <namespaces>
+        <namespace uri="http://www.yanlilong.com/model/content/docrobot/1.0" prefix="docrbt"/>
+    </namespaces>
+
+    <types>
+        <type name="docrbt:summerHoliday">
+            <title>Sample Document Type</title>
+            <parent>cm:folder</parent>
+            <properties>
+                <property name="docrbt:number">
+                    <title>summer holiday number</title>
+                    <type>d:int</type>
+                </property>
+                <property name="docrbt:startDate">
+                    <title>summer holidays start</title>
+                    <type>d:date</type>
+                </property>
+                <property name="docrbt:finishDate">
+                    <title>summer holidays finish</title>
+                    <type>d:date</type>
+                </property>
+            </properties>
+        </type>
+    </types>
+</model>
