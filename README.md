@@ -1,6 +1,6 @@
 # Document Robot Projekt
 
-This is an automatic document project to use Alfresco SDK.
+This is an automatic document project.
 
 # RUN project
 Run with `./run.sh build_start` or `./run.bat build_start` and verify that it
