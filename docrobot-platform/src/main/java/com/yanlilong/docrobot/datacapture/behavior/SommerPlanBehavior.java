@@ -1,5 +1,9 @@
 package com.yanlilong.docrobot.datacapture.behavior;
 
+import com.yanlilong.docrobot.kafka.model.NodeEvent;
+import com.yanlilong.docrobot.kafka.service.MessageService;
+import com.yanlilong.docrobot.kafka.transform.NodeRefToNodeEvent;
+import com.yanlilong.docrobot.kafka.transform.NodeRefToNodePermissions;
 import org.alfresco.repo.node.NodeServicePolicies;
 import org.alfresco.repo.policy.Behaviour;
 import org.alfresco.repo.policy.JavaBehaviour;
@@ -17,9 +21,15 @@ import static com.yanlilong.docrobot.DocRobotConstants.TYPE_SOMMER_PLAN;
 public class SommerPlanBehavior {
     private static final Logger LOGGER = LoggerFactory.getLogger(SommerPlanBehavior.class);
     private final ServiceRegistry serviceRegistry;
+    private MessageService messageService;
+    private NodeRefToNodeEvent nodeTransformer;
+    private NodeRefToNodePermissions nodePermissionsTransformer;
 
-    public SommerPlanBehavior(ServiceRegistry serviceRegistry) {
+    public SommerPlanBehavior(ServiceRegistry serviceRegistry,MessageService kafkaMessageService,NodeRefToNodeEvent nodeTransformer, NodeRefToNodePermissions nodePermissionsTransformer) {
         this.serviceRegistry = serviceRegistry;
+        this.messageService=kafkaMessageService;
+        this.nodeTransformer=nodeTransformer;
+        this.nodePermissionsTransformer=nodePermissionsTransformer;
         LOGGER.info("BEHAVIOR");
     }
 
@@ -31,11 +41,17 @@ public class SommerPlanBehavior {
 
     }
 
-     public void onUpdateSummerHolidayProperties(NodeRef summerPlan, Map<QName, Serializable> before,
+     public void onUpdateSummerHolidayProperties(NodeRef sommerPlan, Map<QName, Serializable> before,
                                                  Map<QName, Serializable> after) {
      //if(after.containsKey(PROP_START_DATE))
      LOGGER.info("before" + before);
      LOGGER.info("after" + after);
+     if(serviceRegistry.getNodeService().exists(sommerPlan)){
+         NodeEvent e=nodeTransformer.transform(sommerPlan);
+         e.setEventType((NodeEvent.EventType.UPDATE));
+         e.setPermissions(nodePermissionsTransformer.transform(sommerPlan));
+         messageService.publish(e);
+     }
      }
 
 }

@@ -1,10 +1,10 @@
 package com.yanlilong.docrobot.kafka.model;
 
 
-import org.alfresco.rest.api.model.NodePermissions;
 
 import java.util.Date;
 import java.util.List;
+import com.yanlilong.docrobot.kafka.model.NodePermissions;
 
 public class NodeEvent {
 
@@ -48,6 +48,14 @@ public class NodeEvent {
 
     public void setSize(Long size) {
         this.size = size;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public void setPermissions(NodePermissions permissions) {
+        this.permissions = permissions;
     }
 
     public static class NodeEventBuilder{

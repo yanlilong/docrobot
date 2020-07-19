@@ -19,7 +19,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <bean id="SommerPlanBehavior" class="com.yanlilong.docrobot.datacapture.behavior.SommerPlanBehavior" init-method="registerEventHandlers">
+    <bean id="SommerPlanBehavior" class="com.yanlilong.docrobot.datacapture.behavior.SommerPlanBehavior"
+          init-method="registerEventHandlers">
+        <constructor-arg ref="ServiceRegistry"/>
+        <constructor-arg ref="kafkamessageService"/>
+        <constructor-arg ref="nodeTransformer"/>
+        <constructor-arg ref="nodePermissionsTransformer"/>
+    </bean>
+    <bean id="kafkamessageService" class="com.yanlilong.docrobot.kafka.service.MessageService">
+        <constructor-arg ref="nodeTransformer"/>
+        <constructor-arg ref="nodePermissionsTransformer"/>
+    </bean>
+    <bean id="nodeTransformer" class="com.yanlilong.docrobot.kafka.transform.NodeRefToNodeEvent">
+        <constructor-arg ref="contentService"/>
+        <constructor-arg ref="nodeService"/>
+        <constructor-arg ref="siteService"/>
+        <constructor-arg ref="taggingService"/>
+    </bean>
+    <bean id="nodePermissionsTransformer" class="com.yanlilong.docrobot.kafka.transform.NodeRefToNodePermissions">
         <constructor-arg ref="ServiceRegistry"/>
     </bean>
 </beans>
