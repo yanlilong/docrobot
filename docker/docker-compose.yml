@@ -19,6 +19,7 @@ services:
       context: ../../../docrobot-platform-docker/target
     environment:
       CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+      TZ: :Europe/Berlin
     ports:
       - "${acs.port}:8080"
       - "${acs.debug.port}:8888"
@@ -30,7 +31,6 @@ services:
     image: postgres:9.6
     environment:
       POSTGRES_DB: alfresco
-      POSTGRES_USER: alfresco
       POSTGRES_PASSWORD: alfresco
     command: postgres -c max_connections=300 -c log_min_messages=LOG
     ports:

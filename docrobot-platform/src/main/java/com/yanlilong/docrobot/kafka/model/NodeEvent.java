@@ -58,6 +58,114 @@ public class NodeEvent {
         this.permissions = permissions;
     }
 
+    public void setNodeRef(String nodeRef) {
+        this.nodeRef = nodeRef;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getNodeRef() {
+        return nodeRef;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public String getMimetype() {
+        return mimetype;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public String getSiteId() {
+        return siteId;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public NodePermissions getPermissions() {
+        return permissions;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
     public static class NodeEventBuilder{
        private String nodeRef;
        private EventType eventType;

@@ -40,7 +40,7 @@ public class NodeRefToNodeEvent {
         NodeEvent nodeEvent=new NodeEvent.NodeEventBuilder().nodeRef(nodeRef.getId())
                 .creator((String)props.get(PROP_CREATOR))
                 .created((Date)props.get(PROP_CREATED))
-                .modifier((String)props.get(PROP_MODIFIED))
+                .modifier((String)props.get(PROP_MODIFIER))
                 .modified((Date) props.get(PROP_MODIFIED))
                 .path(nodeService.getPath(nodeRef).toString())
                 .parent(nodeService.getPrimaryParent(nodeRef).getParentRef().getId())

@@ -12,7 +12,7 @@ public class MessageServiceScopedObject  extends BaseScopableProcessorExtension 
         this.messageService = messageService;
     }
 
-    public void ping(ScriptNode scriptNode) {
+    /**public void ping(ScriptNode scriptNode) {
         messageService.ping(scriptNode.getNodeRef());
-    }
+    }*/
 }

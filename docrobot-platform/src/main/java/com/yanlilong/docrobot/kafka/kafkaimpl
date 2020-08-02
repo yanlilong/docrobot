@@ -1,0 +1,10 @@
+1. bug analysis
+the same kafka producker, but integration with alfresco can producer not send messages.
+ Bug:
+ 2020-07-22 23:20:32,815  ERROR [kafka.service.MessageService] [http-nio-8080-exec-5] org.apache.kafka.common.errors.TimeoutException: Failed to update metadata after 60000 ms.
+have no Solution now.
+Because kafka producer sourcecode is implemented with multitread. i can not understand all about multitread sorucecode
+suggestion:
+multitread
+kafka producker theory
+alfresco content services run in docker, but kafka server run in host maschine, kafka producker in docker cann't connect with kafka server in host.

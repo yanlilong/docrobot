@@ -27,8 +27,6 @@
         <constructor-arg ref="nodePermissionsTransformer"/>
     </bean>
     <bean id="kafkamessageService" class="com.yanlilong.docrobot.kafka.service.MessageService">
-        <constructor-arg ref="nodeTransformer"/>
-        <constructor-arg ref="nodePermissionsTransformer"/>
     </bean>
     <bean id="nodeTransformer" class="com.yanlilong.docrobot.kafka.transform.NodeRefToNodeEvent">
         <constructor-arg ref="contentService"/>

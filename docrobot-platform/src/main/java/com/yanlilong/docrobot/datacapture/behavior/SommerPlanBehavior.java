@@ -12,11 +12,13 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.namespace.QName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import java.io.Serializable;
 import java.util.Map;
 
 import static com.yanlilong.docrobot.DocRobotConstants.TYPE_SOMMER_PLAN;
+import static org.alfresco.model.ContentModel.TYPE_CMOBJECT;
 
 public class SommerPlanBehavior {
     private static final Logger LOGGER = LoggerFactory.getLogger(SommerPlanBehavior.class);
@@ -35,9 +37,26 @@ public class SommerPlanBehavior {
 
     public void registerEventHandlers() {
           serviceRegistry.getPolicyComponent().bindClassBehaviour(
-         NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, TYPE_SOMMER_PLAN,
-         new JavaBehaviour(this, "onUpdateSummerHolidayProperties",
+         NodeServicePolicies.OnCreateNodePolicy.QNAME, TYPE_CMOBJECT,
+         new JavaBehaviour(this, "onUpdateNodes",
          Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
+
+        serviceRegistry.getPolicyComponent().bindClassBehaviour(
+                NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, TYPE_CMOBJECT,
+                new JavaBehaviour(this, "onUpdateProperties",
+                        Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
+
+        serviceRegistry.getPolicyComponent().bindClassBehaviour(
+                NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, TYPE_CMOBJECT,
+                new JavaBehaviour(this, "onUpdateProperties",
+                        Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
+
+        serviceRegistry.getPolicyComponent().bindClassBehaviour(
+                NodeServicePolicies.BeforeDeleteNodePolicy.QNAME, TYPE_CMOBJECT,
+                new JavaBehaviour(this, "beforeDeleteNode",
+                        Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
+
+
 
     }
 
@@ -47,10 +66,13 @@ public class SommerPlanBehavior {
      LOGGER.info("before" + before);
      LOGGER.info("after" + after);
      if(serviceRegistry.getNodeService().exists(sommerPlan)){
+
          NodeEvent e=nodeTransformer.transform(sommerPlan);
          e.setEventType((NodeEvent.EventType.UPDATE));
+
          e.setPermissions(nodePermissionsTransformer.transform(sommerPlan));
-         messageService.publish(e);
+         MessageService.publish(e);
+
      }
      }
 
