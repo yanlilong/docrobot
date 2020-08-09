@@ -47,6 +47,7 @@ public class ProducerEvent {
             sendAsync(record, callback, producer);
         }
         producer.flush();
+        producer.close();
     }
 
 
