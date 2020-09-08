@@ -19,14 +19,14 @@ import java.util.Map;
 
 import static org.alfresco.model.ContentModel.TYPE_CMOBJECT;
 
-public class SommerPlanBehavior {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SommerPlanBehavior.class);
+public class cmObjectBehavior {
+    private static final Logger LOGGER = LoggerFactory.getLogger(cmObjectBehavior.class);
     private final ServiceRegistry serviceRegistry;
-    private MessageService messageService;
-    private NodeRefToNodeEvent nodeTransformer;
-    private NodeRefToNodePermissions nodePermissionsTransformer;
+    private final MessageService messageService;
+    private final NodeRefToNodeEvent nodeTransformer;
+    private final NodeRefToNodePermissions nodePermissionsTransformer;
 
-    public SommerPlanBehavior(ServiceRegistry serviceRegistry, MessageService kafkaMessageService, NodeRefToNodeEvent nodeTransformer, NodeRefToNodePermissions nodePermissionsTransformer) {
+    public cmObjectBehavior(ServiceRegistry serviceRegistry, MessageService kafkaMessageService, NodeRefToNodeEvent nodeTransformer, NodeRefToNodePermissions nodePermissionsTransformer) {
         this.serviceRegistry = serviceRegistry;
         this.messageService = kafkaMessageService;
         this.nodeTransformer = nodeTransformer;
@@ -50,15 +50,16 @@ public class SommerPlanBehavior {
                 new JavaBehaviour(this, "beforeDeleteNode",
                         Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
     }
+
     public void onUpdateProperties(NodeRef nodeRef, Map<QName, Serializable> before,
-                                                Map<QName, Serializable> after) {
+                                   Map<QName, Serializable> after) {
         LOGGER.info("before" + before);
         LOGGER.info("after" + after);
-        if(serviceRegistry.getNodeService().exists(nodeRef)){
-            NodeEvent e=new NodeEvent();
+        if (serviceRegistry.getNodeService().exists(nodeRef)) {
+            NodeEvent e = new NodeEvent();
             e.setNodeRef(nodeRef.getId());
             e.setEventType((NodeEvent.EventType.UPDATE));
-           e.setPermissions(nodePermissionsTransformer.transform(nodeRef));
+            e.setPermissions(nodePermissionsTransformer.transform(nodeRef));
 
             messageService.publish(e);
         }
