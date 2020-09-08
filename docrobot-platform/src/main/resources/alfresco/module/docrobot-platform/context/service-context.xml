@@ -27,6 +27,9 @@
         <constructor-arg ref="nodePermissionsTransformer"/>
     </bean>
     <bean id="kafkamessageService" class="com.yanlilong.docrobot.kafka.service.MessageService">
+        <constructor-arg ref="producerEvent"/>
+    </bean>
+    <bean id="producerEvent" class="com.yanlilong.docrobot.kafka.service.ProducerEvent">
     </bean>
     <bean id="nodeTransformer" class="com.yanlilong.docrobot.kafka.transform.NodeRefToNodeEvent">
         <constructor-arg ref="contentService"/>
@@ -35,6 +38,7 @@
         <constructor-arg ref="taggingService"/>
     </bean>
     <bean id="nodePermissionsTransformer" class="com.yanlilong.docrobot.kafka.transform.NodeRefToNodePermissions">
-        <constructor-arg ref="ServiceRegistry"/>
+        <constructor-arg ref="nodeService"/>
+        <constructor-arg ref="permissionService"/>
     </bean>
 </beans>

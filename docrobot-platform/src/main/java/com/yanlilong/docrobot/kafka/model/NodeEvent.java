@@ -1,14 +1,23 @@
 package com.yanlilong.docrobot.kafka.model;
 
 
-
 import java.util.Date;
 import java.util.List;
-import com.yanlilong.docrobot.kafka.model.NodePermissions;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeEvent {
 
-    public enum EventType{
+    public enum EventType {
         CREATE,
         UPDATE,
         DELETE,
@@ -18,6 +27,7 @@ public class NodeEvent {
         ENABLE_INHERIT,
         DISABLE_INHERIT
     }
+
     private String nodeRef;
     private EventType eventType;
     private String path;
@@ -34,241 +44,4 @@ public class NodeEvent {
     private String permission;
     private NodePermissions permissions;
     private List<String> tags;
-
-    public NodeEvent(NodeEventBuilder builder) {
-    }
-
-    public void setSiteId(String siteId) {
-        this.siteId = siteId;
-    }
-
-    public void setMimetype(String mimetype) {
-        this.mimetype = mimetype;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
-    public void setPermissions(NodePermissions permissions) {
-        this.permissions = permissions;
-    }
-
-    public void setNodeRef(String nodeRef) {
-        this.nodeRef = nodeRef;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    public String getNodeRef() {
-        return nodeRef;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public String getMimetype() {
-        return mimetype;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public String getSiteId() {
-        return siteId;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public NodePermissions getPermissions() {
-        return permissions;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public static class NodeEventBuilder{
-       private String nodeRef;
-       private EventType eventType;
-       private String path;
-       private Date created;
-       private Date modified;
-       private String creator;
-       private String modifier;
-       private String mimetype;
-       private String contentType;
-       private String siteId;
-       private Long size;
-       private String parent;
-       private String authority;
-       private String permission;
-       private NodePermissions permissions;
-       private List<String> tags;
-
-       public NodeEventBuilder() {
-       }
-
-       public NodeEventBuilder nodeRef(String nodeRef) {
-           this.nodeRef = nodeRef;
-           return this;
-       }
-
-       public NodeEventBuilder eventType(EventType eventType) {
-           this.eventType = eventType;
-           return this;
-       }
-
-       public NodeEventBuilder path(String path) {
-           this.path = path;
-           return this;
-       }
-
-       public NodeEventBuilder created(Date created) {
-           this.created = created;
-           return this;
-       }
-
-       public NodeEventBuilder modified(Date modified) {
-           this.modified = modified;
-           return this;
-       }
-
-       public NodeEventBuilder creator(String creator) {
-           this.creator = creator;
-           return this;
-       }
-
-       public NodeEventBuilder modifier(String modifier) {
-           this.modifier = modifier;
-           return this;
-       }
-
-       public NodeEventBuilder mimetype(String mimetype) {
-           this.mimetype = mimetype;
-           return this;
-       }
-
-       public NodeEventBuilder contentType(String contentType) {
-           this.contentType = contentType;
-           return this;
-       }
-
-       public NodeEventBuilder siteId(String siteId) {
-           this.siteId = siteId;
-           return this;
-       }
-
-       public NodeEventBuilder size(Long size) {
-           this.size = size;
-           return this;
-       }
-
-       public NodeEventBuilder parent(String parent) {
-           this.parent = parent;
-           return this;
-       }
-
-       public NodeEventBuilder authority(String authority) {
-           this.authority = authority;
-           return this;
-       }
-
-       public NodeEventBuilder permission(String permission) {
-           this.permission = permission;
-           return this;
-       }
-
-       public NodeEventBuilder permissions(NodePermissions permissions) {
-           this.permissions = permissions;
-           return this;
-       }
-
-       public NodeEventBuilder tags(List<String> tags) {
-           this.tags = tags;
-           return this;
-       }
-       public NodeEvent build(){
-           return new NodeEvent(this);
-       }
-   }
-
 }

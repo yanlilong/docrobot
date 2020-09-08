@@ -50,15 +50,17 @@ public class SommerPlanBehavior {
                 new JavaBehaviour(this, "beforeDeleteNode",
                         Behaviour.NotificationFrequency.TRANSACTION_COMMIT));
     }
-    public void onUpdateProperties(NodeRef sommerPlan, Map<QName, Serializable> before,
+    public void onUpdateProperties(NodeRef nodeRef, Map<QName, Serializable> before,
                                                 Map<QName, Serializable> after) {
         LOGGER.info("before" + before);
         LOGGER.info("after" + after);
-        if(serviceRegistry.getNodeService().exists(sommerPlan)){
-            NodeEvent e=nodeTransformer.transform(sommerPlan);
+        if(serviceRegistry.getNodeService().exists(nodeRef)){
+            NodeEvent e=new NodeEvent();
+            e.setNodeRef(nodeRef.getId());
             e.setEventType((NodeEvent.EventType.UPDATE));
-            e.setPermissions(nodePermissionsTransformer.transform(sommerPlan));
-            MessageService.publish(e);
+           e.setPermissions(nodePermissionsTransformer.transform(nodeRef));
+
+            messageService.publish(e);
         }
     }
 

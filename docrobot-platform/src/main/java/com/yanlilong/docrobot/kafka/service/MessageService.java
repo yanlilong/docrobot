@@ -6,16 +6,21 @@ import org.springframework.util.StopWatch;
 
 public class MessageService {
     private final static Logger LOGGER = Logger.getLogger(MessageService.class);
+    ProducerEvent producerEvent;
+
+    public MessageService(ProducerEvent producerEvent) {
+        this.producerEvent = producerEvent;
+    }
 
 
-    public static void publish(NodeEvent event) {
+    public void publish(NodeEvent event) {
         try {
-            ProducerEvent.init();
-            StopWatch stopWatch=new StopWatch("thread run performance");
+            producerEvent.init();
+            StopWatch stopWatch = new StopWatch("thread run performance");
             stopWatch.start();
-            ProducerEvent.sendmessage();
+            producerEvent.sendmessage(event);
             stopWatch.stop();
-           LOGGER.info( stopWatch.prettyPrint());
+            LOGGER.info(stopWatch.prettyPrint());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }

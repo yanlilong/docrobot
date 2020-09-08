@@ -13,13 +13,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NodeRefToNodePermissions {
-    private NodeService nodeService ;
+    private NodeService nodeService;
     private PermissionService permissionService;
 
-    public NodeRefToNodePermissions(ServiceRegistry serviceRegistry) {
-        this.nodeService = serviceRegistry.getNodeService();
-        this.permissionService =serviceRegistry.getPermissionService();
+    public NodeRefToNodePermissions(NodeService nodeService, PermissionService permissionService) {
+        this.nodeService = nodeService;
+        this.permissionService = permissionService;
     }
+
 
     public NodePermissions transform(NodeRef nodeRef) {
         boolean inherits = permissionService.getInheritParentPermissions(nodeRef);
@@ -28,13 +29,12 @@ public class NodeRefToNodePermissions {
         Set<AccessPermission> permissionSet = permissionService.getAllSetPermissions(nodeRef);
         Set<NodePermission> set = new HashSet<>();
         for (AccessPermission perm : permissionSet) {
-
-            NodePermission nodePerm = new NodePermission.NodePermissionBuilder().authority(perm.getAuthority())
-                    .authorityType(perm.getAuthorityType().name())
-                    .isInherited(perm.isInherited())
+            NodePermission nodePermission = NodePermission.builder().authority(perm.getAuthority())
+                    .authorityType(perm.getAuthorityType() != null ? perm.getAuthorityType().name() : "")
                     .permission(perm.getPermission())
+                    .isInherited(perm.isInherited())
                     .build();
-            set.add(nodePerm);
+            set.add(nodePermission);
         }
         perms.setPermissions(set);
         return perms;

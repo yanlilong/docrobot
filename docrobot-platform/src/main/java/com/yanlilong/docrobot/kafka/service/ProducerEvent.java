@@ -1,12 +1,15 @@
 package com.yanlilong.docrobot.kafka.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yanlilong.docrobot.kafka.model.NodeEvent;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.log4j.Logger;
 
 
 import java.util.Properties;
-import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,13 +17,13 @@ public class ProducerEvent {
     private final static Logger LOGGER = Logger.getLogger(ProducerEvent.class);
     final static String topicName = "alfresco-nodes-event";
     // create instance for properties to access producer configs
-    static Properties props = new Properties();
-    static KafkaProducer<String, String> producer;
+    private Properties props = new Properties();
+    private KafkaProducer<String, String> producer;
+    private ObjectMapper mapper = new ObjectMapper();
 
-    public static void init() {
+    public void init() {
         // create instance for properties to access producer configs
         props.put("bootstrap.servers", "172.17.0.1:9092");
-        // props.put("bootstrap.servers", "localhost:9092");
         //Assign localhost id
         //Set acknowledgements for producer requests.
         props.put("acks", "all");
@@ -37,17 +40,17 @@ public class ProducerEvent {
 
     }
 
-    public static void sendmessage() {
+    public void sendmessage(NodeEvent event) throws ExecutionException, InterruptedException, JsonProcessingException {
         producer = new KafkaProducer<>(props);
-        Callback callback = new ProducerCallback();
+        String message = mapper.writeValueAsString(event);
         ProducerRecord<String, String> record;
-        for (int i = 0; i < 10; i++) {
-            record = new ProducerRecord<>(topicName,
-                    Integer.toString(i), Integer.toString(i));
-            sendAsync(record, callback, producer);
+        //for (int i = 0; i < 10; i++) {
+        if (message != null && message.length() != 0) {
+            record = new ProducerRecord<String,String>(topicName, message);
+            producer.send(record).get();
         }
-        producer.flush();
         producer.close();
+
     }
 
 
@@ -66,5 +69,16 @@ public class ProducerEvent {
         public void onCompletion(RecordMetadata recordMetadata, Exception ex) {
             LOGGER.info("Received notification: [{}] and ex: [{}]" + recordMetadata, ex);
         }
+    }
+
+    public static void main(String[] args) {
+      /**  ObjectMapper mapper = new ObjectMapper();
+        NodeEventT e=new NodeEventT();
+        NodeRefToNodeEvent nodeTransformer=new NodeRefToNodeEvent();
+        NodeEvent e=nodeTransformer.transform(nodeRef);
+        e.setNodeRef(nodeRef.getId());
+        e.setEventType((NodeEventT.EventType.UPDATE));
+        // e.setPermissions(nodePermissionsTransformer.transform(nodeRef));
+        mapper.writeValue();*/
     }
 }
